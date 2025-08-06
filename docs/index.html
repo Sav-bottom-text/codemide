@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Redemption Portal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group {
+            margin: 1.5rem 0;
+        }
+        
+        input[type="text"] {
+            width: 70%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        #message-display {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            min-height: 100px;
+            display: none;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Secret Message Redemption ✨</h1>
+        <p>Enter your special code below to reveal a hidden message!</p>
+        
+        <div class="input-group">
+            <input type="text" id="code-input" placeholder="Enter your code here...">
+            <button id="redeem-btn">Redeem Code</button>
+        </div>
+        
+        <div id="message-display">
+            <h2>Your Secret Message:</h2>
+            <p id="message-content"></p>
+        </div>
+        
+        <div id="error-message" class="hidden">
+            <p style="color: #e74c3c;">Invalid code. Please try again.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('redeem-btn').addEventListener('click', function() {
+            const code = document.getElementById('code-input').value.trim();
+            const messageDisplay = document.getElementById('message-display');
+            const messageContent = document.getElementById('message-content');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Simple demo logic - replace with actual code validation
+            if (code === "HELLO123") {
+                messageContent.textContent = "Welcome to the secret club! 🎉 You've found your first message.";
+                messageDisplay.style.display = 'block';
+                errorMessage.classList.add('hidden');
+            } else if (code === "TEST456") {
+                messageContent.textContent = "This is a test message. The real ones will be much cooler!";
+                messageDisplay.style.display = 'block';
+                errorMessage.classList.add('hidden');
+            } else if (code) {
+                // Invalid code
+                messageDisplay.style.display = 'none';
+                errorMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
