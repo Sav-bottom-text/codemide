@@ -1,180 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Code Redemption Portal</title>
-      <style>
-         body {
-         font-family: 'Arial', sans-serif;
-         background-color: #f5f5f5;
-         margin: 0;
-         padding: 0;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         min-height: 100vh;
-         color: #333;
-         }
-         .container {
-         background-color: white;
-         border-radius: 10px;
-         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-         padding: 2rem;
-         width: 90%;
-         max-width: 500px;
-         text-align: center;
-         }
-         h1 {
-         color: #2c3e50;
-         margin-bottom: 1.5rem;
-         }
-         .input-group {
-         margin: 1.5rem 0;
-         }
-         input[type="text"] {
-         width: 70%;
-         padding: 12px;
-         border: 2px solid #ddd;
-         border-radius: 5px;
-         font-size: 16px;
-         transition: border 0.3s;
-         }
-         input[type="text"]:focus {
-         border-color: #3498db;
-         outline: none;
-         }
-         button {
-         background-color: #3498db;
-         color: white;
-         border: none;
-         padding: 12px 20px;
-         border-radius: 5px;
-         cursor: pointer;
-         font-size: 16px;
-         transition: background-color 0.3s;
-         }
-         button:hover {
-         background-color: #2980b9;
-         }
-         #message-display {
-         margin-top: 2rem;
-         padding: 1rem;
-         border-radius: 5px;
-         background-color: #f8f9fa;
-         min-height: 100px;
-         display: none;
-         }
-         .hidden {
-         display: none;
-         }
-      </style>
-   </head>
-   <body>
-      <div class="container">
-         <h1>✨ Secret Message Redemption ✨</h1>
-         <p>Enter your special code below to reveal a hidden message!</p>
-         <div class="input-group">
-            <input type="text" id="code-input" placeholder="Enter your code here...">
-            <button id="redeem-btn">Redeem Code</button>
-         </div>
-         <div id="message-display">
-            <h2>Your Secret Message:</h2>
-            <p id="message-content"></p>
-         </div>
-         <div id="error-message" class="hidden">
-            <p style="color: #e74c3c;">Invalid code. Please try again.</p>
-         </div>
-      </div>
-      <script>
-         document.getElementById('redeem-btn').addEventListener('click', function() {
-             const code = document.getElementById('code-input').value.trim();
-             const messageDisplay = document.getElementById('message-display');
-             const messageContent = document.getElementById('message-content');
-             const errorMessage = document.getElementById('error-message');
-             
-             // Simple demo logic - replace with actual code validation
-             if (code === "HELLO123") {
-                 messageContent.textContent = "Welcome to the secret club! 🎉 You've found your first message.";
-                 messageDisplay.style.display = 'block';
-                 errorMessage.classList.add('hidden');
-             } else if (code === "TEST456") {
-                 messageContent.textContent = "This is a test message. The real ones will be much cooler!";
-                 messageDisplay.style.display = 'block';
-                 errorMessage.classList.add('hidden');
-             } else if (code) {
-                 // Invalid code
-                 messageDisplay.style.display = 'none';
-                 errorMessage.classList.remove('hidden');
-             }
-         });
-      </script>
-      <!-- Replace the existing script with this updated version -->
-      <script>
-         // This would normally be fetched from your server, but we'll simulate it
-         const codeDatabase = {
-           "SECRET2023": {
-             "message": "Welcome to the inner circle! The owl flies at midnight.",
-             "expires": "2023-12-31",
-             "redeemed": false
-           },
-           "MOONLIGHT": {
-             "message": "The treasure is buried where the old oak's shadow falls at noon.",
-             "expires": "never",
-             "redeemed": false
-           },
-           "DRAGON42": {
-             "message": "Congratulations! You found the dragon's secret.",
-             "expires": "2024-06-30",
-             "redeemed": false
-           }
-         };
-         
-         document.getElementById('redeem-btn').addEventListener('click', function() {
-           const code = document.getElementById('code-input').value.trim().toUpperCase();
-           const messageDisplay = document.getElementById('message-display');
-           const messageContent = document.getElementById('message-content');
-           const errorMessage = document.getElementById('error-message');
-           
-           // Reset displays
-           messageDisplay.style.display = 'none';
-           errorMessage.classList.add('hidden');
-           
-           if (!code) {
-             errorMessage.textContent = "Please enter a code";
-             errorMessage.classList.remove('hidden');
-             return;
-           }
-           
-           if (codeDatabase[code]) {
-             const codeData = codeDatabase[code];
-             
-             // Check if code is expired
-             if (codeData.expires !== "never" && new Date() > new Date(codeData.expires)) {
-               errorMessage.textContent = "This code has expired";
-               errorMessage.classList.remove('hidden');
-               return;
-             }
-             
-             // Check if already redeemed (if you want single-use codes)
-             if (codeData.redeemed) {
-               errorMessage.textContent = "This code has already been used";
-               errorMessage.classList.remove('hidden');
-               return;
-             }
-             
-             // Show the secret message
-             messageContent.textContent = codeData.message;
-             messageDisplay.style.display = 'block';
-             
-             // Mark as redeemed (in a real app, you'd save this to your database)
-             codeDatabase[code].redeemed = true;
-             
-           } else {
-             errorMessage.textContent = "Invalid code. Please try again.";
-             errorMessage.classList.remove('hidden');
-           }
-         });
-      </script>
-   </body>
+<head>
+  <meta charset="utf-8">
+  <title>Simple Code Redeemer</title>
+</head>
+<body>
+  <h2>Code Redeemer</h2>
+  <input id="codeInput" type="text" placeholder="Enter code here" />
+  <button id="confirmBtn">Confirm</button>
+  <div id="status"></div>
+
+  <!-- Popup modal -->
+  <div id="modal" style="display:none; position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.3);">
+    <div style="margin:60px auto; padding:20px; width:80%; max-width:400px; border:1px solid #000; background:#fff;">
+      <pre id="modalMessage" style="white-space:pre-wrap;"></pre>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Fixed list of codes
+    const codes = {
+      "WELCOME": "Welcome! This is a sample message.",
+      "TREASURE": "You found the hidden treasure message!",
+      "SECRET": "Shh... this is a secret code!"
+    };
+
+    const codeInput = document.getElementById('codeInput');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const status = document.getElementById('status');
+    const modal = document.getElementById('modal');
+    const modalMessage = document.getElementById('modalMessage');
+    const closeModal = document.getElementById('closeModal');
+
+    confirmBtn.addEventListener('click', redeemCode);
+    codeInput.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') redeemCode();
+    });
+    closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
+
+    function redeemCode(){
+      const raw = codeInput.value.trim();
+      if(!raw){
+        status.textContent = 'Please enter a code.';
+        return;
+      }
+      const key = raw.toUpperCase();
+      if(codes[key]){
+        modalMessage.textContent = codes[key];
+        modal.style.display = 'block';
+        status.textContent = 'Code redeemed: ' + key;
+      } else {
+        status.textContent = 'Code not found.';
+      }
+      codeInput.value = '';
+    }
+  </script>
+</body>
 </html>

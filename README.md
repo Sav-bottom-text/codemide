@@ -1,2 +1,2 @@
 # codemide
-redeem codes and check out stuff!
+redeem codes and check out stuff!.. I guess..
