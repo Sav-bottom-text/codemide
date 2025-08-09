@@ -2,60 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Code Redeemer</title>
 </head>
 <body>
   <h2>Code Redeemer</h2>
   <input id="codeInput" type="text" placeholder="Enter code here" />
   <button id="confirmBtn">Confirm</button>
-  <div id="status"></div>
-
-  <!-- Popup modal -->
-  <div id="modal" style="display:none; position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.3);">
-    <div style="margin:60px auto; padding:20px; width:80%; max-width:400px; border:1px solid #000; background:#fff;">
-      <pre id="modalMessage" style="white-space:pre-wrap;"></pre>
-      <button id="closeModal">Close</button>
-    </div>
-  </div>
+  <div id="status" style="margin-top: 10px; min-height: 20px;"></div>
 
   <script>
     // Fixed list of codes
     const codes = {
       "WELCOME": "Welcome! This is a sample message.",
       "TREASURE": "You found the hidden treasure message!",
-      "NEVERLETGO: https://imgur.com/a/eItzPQ0"
+      "NEVERLETGO": "https://imgur.com/a/eItzPQ0"
     };
 
     const codeInput = document.getElementById('codeInput');
     const confirmBtn = document.getElementById('confirmBtn');
     const status = document.getElementById('status');
-    const modal = document.getElementById('modal');
-    const modalMessage = document.getElementById('modalMessage');
-    const closeModal = document.getElementById('closeModal');
 
     confirmBtn.addEventListener('click', redeemCode);
     codeInput.addEventListener('keydown', function(e) {
       if(e.key === 'Enter') redeemCode();
     });
-    closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
 
     function redeemCode(){
       const raw = codeInput.value.trim();
-      if(!raw){
-        status.textContent = 'Please enter a code.';
-        return;
-      }
       const key = raw.toUpperCase();
-      if(codes[key]){
-        modalMessage.textContent = codes[key];
-        modal.style.display = 'block';
-        status.textContent = 'Code redeemed: ' + key;
+      
+      // Only show a message if the code exists
+      if(codes[key]) {
+        status.textContent = codes[key];
       } else {
-        status.textContent = 'Code not found.';
+        status.textContent = ""; // Clear if code doesn't exist
       }
-      codeInput.value = '';
+      
+      codeInput.value = ''; // Clear input
     }
   </script>
 </body>
 </html>
-
